@@ -37,7 +37,7 @@ export function SectionEdge() {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          filter: "brightness(0.22) saturate(0.5)",
+          filter: "brightness(0.72) saturate(0.85)",
           zIndex: 0,
           transform: "translateZ(0)",
           willChange: "transform",
@@ -51,7 +51,7 @@ export function SectionEdge() {
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to bottom, #0A0C1266 0%, #0A0C12 90%)",
+          background: "linear-gradient(to bottom, #0A0C1233 0%, #0A0C12 80%)",
           zIndex: 0,
         }}
       />
