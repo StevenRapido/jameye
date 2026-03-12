@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { C, BTN, bebas, mono, plex } from "../constants";
+import heroBg from "../assets/videos/hero-bg.mp4";
 
 export function Hero({ emailRef }) {
   const [phase, setPhase] = useState(0);
@@ -58,7 +59,7 @@ export function Hero({ emailRef }) {
           backfaceVisibility: "hidden",
         }}
       >
-        <source src="/hero-bg.mp4" type="video/mp4" />
+        <source src={heroBg} type="video/mp4" />
       </video>
       {/* Gradient overlay */}
       <div

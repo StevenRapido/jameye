@@ -1,5 +1,6 @@
 import { useReveal } from "../hooks/useReveal";
 import { C, LEVELS, bebas, mono, plex } from "../constants";
+import sectionLevelsVideo from "../assets/videos/section-levels-bg.mp4";
 
 export function SectionLevels() {
   const [ref, visible] = useReveal(0.15);
@@ -36,7 +37,7 @@ export function SectionLevels() {
           backfaceVisibility: "hidden",
         }}
       >
-        <source src="/section-levels-bg.mp4" type="video/mp4" />
+        <source src={sectionLevelsVideo} type="video/mp4" />
       </video>
       {/* Gradient overlay */}
       <div

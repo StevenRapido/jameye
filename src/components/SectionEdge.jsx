@@ -1,6 +1,7 @@
 import { useReveal } from "../hooks/useReveal";
 import { useCount } from "../hooks/useCount";
 import { C, bebas, mono, plex } from "../constants";
+import sectionEdgeVideo from "../assets/videos/section-edge-precision.mp4";
 
 const METRICS = [
   { pct: "45%", label: "Information Edge", desc: '"Did you beat the market?"' },
@@ -43,7 +44,7 @@ export function SectionEdge() {
           backfaceVisibility: "hidden",
         }}
       >
-        <source src="/section-edge-precision.mp4" type="video/mp4" />
+        <source src={sectionEdgeVideo} type="video/mp4" />
       </video>
       {/* Gradient overlay */}
       <div

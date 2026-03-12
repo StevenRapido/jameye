@@ -1,5 +1,6 @@
 import { useReveal } from "../hooks/useReveal";
 import { C, bebas, mono, plex } from "../constants";
+import section3Video from "../assets/videos/section3-bg.mp4";
 
 export function SectionTournaments() {
   const [ref, visible] = useReveal(0.2);
@@ -30,21 +31,21 @@ export function SectionTournaments() {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          filter: "brightness(0.22) saturate(0.5)",
+          filter: "brightness(0.85) saturate(0.9)",
           zIndex: 0,
           transform: "translateZ(0)",
           willChange: "transform",
           backfaceVisibility: "hidden",
         }}
       >
-        <source src="/section3-bg.mp4" type="video/mp4" />
+        <source src={section3Video} type="video/mp4" />
       </video>
       {/* Gradient overlay */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to bottom, #0A0C1266 0%, #0A0C12 90%)",
+          background: "linear-gradient(to bottom, #0A0C1222 0%, #0A0C12 75%)",
           zIndex: 0,
         }}
       />
