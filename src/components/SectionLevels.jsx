@@ -3,7 +3,6 @@ import { C, LEVELS, bebas, mono, plex } from "../constants";
 
 export function SectionLevels() {
   const [ref, visible] = useReveal(0.15);
-
   return (
     <section
       ref={ref}
@@ -16,14 +15,46 @@ export function SectionLevels() {
         alignItems: "center",
         justifyContent: "center",
         padding: "120px 40px 80px",
+        overflow: "hidden",
       }}
     >
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        playsInline
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          filter: "brightness(0.22) saturate(0.5)",
+          zIndex: 0,
+          transform: "translateZ(0)",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+        }}
+      >
+        <source src="/section-levels-bg.mp4" type="video/mp4" />
+      </video>
+      {/* Gradient overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, #0A0C1266 0%, #0A0C12 90%)",
+          zIndex: 0,
+        }}
+      />
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
       <p
         className={`reveal ${visible ? "visible" : ""} reveal-delay-1`}
         style={{
           fontFamily: mono,
-          fontSize: "12px",
-          color: C.violet,
+          fontSize: 10,
+          color: C.accent,
+          letterSpacing: "4px",
           marginBottom: "1rem",
         }}
       >
@@ -42,13 +73,13 @@ export function SectionLevels() {
       >
         Ten levels. /
         <br />
-        <span style={{ color: C.violet }}>One destination.</span>
+        <span style={{ color: C.accent }}>One destination.</span>
       </h2>
       <p
         className={`reveal ${visible ? "visible" : ""} reveal-delay-3`}
         style={{
           fontFamily: plex,
-          fontSize: "15px",
+          fontSize: 15,
           color: C.sage,
           lineHeight: 1.7,
           textAlign: "center",
@@ -82,6 +113,7 @@ export function SectionLevels() {
           maxWidth: 900,
           marginTop: 24,
           height: 4,
+          borderRadius: 2,
         }}
       >
         {LEVELS.map((level) => (
@@ -91,13 +123,14 @@ export function SectionLevels() {
               flex: 1,
               background: level.bg,
               ...(level.name === "Legend" && {
-                border: "1px solid #5B4FE888",
-                boxShadow: "0 0 20px #5B4FE844",
+                border: "1px solid #7B9FE888",
+                boxShadow: "0 0 20px #7B9FE844",
                 borderRadius: 2,
               }),
             }}
           />
         ))}
+      </div>
       </div>
     </section>
   );
@@ -146,7 +179,7 @@ function LevelBadge({ level }) {
       <div
         style={{
           width: 20,
-          height: 1,
+          height: 1.5,
           background: level.text,
           opacity: 0.5,
           margin: "8px auto",
@@ -156,7 +189,8 @@ function LevelBadge({ level }) {
         style={{
           fontFamily: mono,
           fontSize: 9,
-          color: C.dim,
+          color: level.text,
+          opacity: 0.7,
         }}
       >
         {subtext}

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { C, bebas, mono, plex } from "../constants";
+import { useState, useEffect } from "react";
+import { C, BTN, bebas, mono, plex } from "../constants";
 
 export function Hero({ emailRef }) {
   const [phase, setPhase] = useState(0);
@@ -40,18 +40,44 @@ export function Hero({ emailRef }) {
         overflow: "hidden",
       }}
     >
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        playsInline
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          filter: "brightness(0.22) saturate(0.5)",
+          zIndex: 0,
+          transform: "translateZ(0)",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+        }}
+      >
+        <source src="/smooth/hero-bg.mp4" type="video/mp4" />
+      </video>
+      {/* Gradient overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, #0A0C1266 0%, #0A0C12 90%)",
+          zIndex: 0,
+        }}
+      />
       {/* Grid */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `
-            linear-gradient(to right, ${C.border} 1px, transparent 1px),
-            linear-gradient(to bottom, ${C.border} 1px, transparent 1px)
-          `,
+          backgroundImage: "linear-gradient(#7B9FE812 1px, transparent 1px), linear-gradient(90deg, #7B9FE812 1px, transparent 1px)",
           backgroundSize: "60px 60px",
-          maskImage: "radial-gradient(ellipse at center, black 20%, transparent 70%)",
-          WebkitMaskImage: "radial-gradient(ellipse at center, black 20%, transparent 70%)",
+          maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
           zIndex: 0,
         }}
       />
@@ -64,7 +90,7 @@ export function Hero({ emailRef }) {
           transform: "translate(-50%, -50%)",
           fontFamily: bebas,
           fontSize: "55vw",
-          color: C.violet,
+          color: C.accent,
           opacity: 0.04,
           animation: "pulse 8s ease-in-out infinite",
           zIndex: 0,
@@ -79,7 +105,7 @@ export function Hero({ emailRef }) {
           left: 0,
           right: 0,
           height: 1,
-          background: `linear-gradient(90deg, transparent, ${C.violet}44, transparent)`,
+          background: "linear-gradient(90deg, transparent, #7B9FE822, transparent)",
           animation: "scanline 8s linear infinite",
           zIndex: 0,
         }}
@@ -98,7 +124,8 @@ export function Hero({ emailRef }) {
           style={{
             fontFamily: mono,
             fontSize: "clamp(12px, 1.8vw, 14px)",
-            color: C.dim,
+            color: C.accent,
+            letterSpacing: "4px",
             marginBottom: "1.5rem",
             ...reveal(1),
           }}
@@ -122,33 +149,58 @@ export function Hero({ emailRef }) {
           style={{
             fontFamily: bebas,
             fontSize: "clamp(40px, 12vw, 96px)",
-            color: C.violet,
+            color: C.accent,
             lineHeight: 1.1,
             letterSpacing: "-0.02em",
-            marginBottom: "2rem",
+            marginBottom: "1.5rem",
             ...reveal(3),
           }}
         >
           Skill compounds.
         </h1>
         <div style={{ ...reveal(4) }}>
+          <p
+            style={{
+              fontFamily: plex,
+              fontSize: "clamp(14px, 1.8vw, 18px)",
+              color: C.sage,
+              lineHeight: 1.7,
+              maxWidth: 520,
+              margin: "0 auto 1.5rem",
+            }}
+          >
+            Jameye is the gamified prediction market where your Edge Score — not your luck — determines everything.
+          </p>
           <button
             onClick={scrollToEmail}
             style={{
               fontFamily: plex,
               fontWeight: 700,
-              fontSize: "14px",
-              padding: "16px 32px",
-              background: C.violet,
-              color: C.bone,
+              fontSize: 14,
+              padding: "12px 36px",
+              background: BTN.primaryBg,
+              color: BTN.primaryText,
               border: "none",
-              borderRadius: 8,
+              borderRadius: 6,
               cursor: "pointer",
-              transition: "background 0.2s",
+              transition: "opacity 0.2s",
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.88"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
           >
             Get Early Access
           </button>
+          <p
+            style={{
+              fontFamily: mono,
+              fontSize: 10,
+              color: C.dim,
+              letterSpacing: "1px",
+              marginTop: 14,
+            }}
+          >
+            No spam. Just a heads-up when we launch.
+          </p>
         </div>
       </div>
       {/* Scroll indicator */}
@@ -156,22 +208,23 @@ export function Hero({ emailRef }) {
         <div
           style={{
             position: "absolute",
-            bottom: 32,
+            bottom: 48,
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 8,
+            opacity: 1,
             animation: "fadeUp 0.6s ease-out",
           }}
         >
           <span
             style={{
               fontFamily: mono,
-              fontSize: "10px",
+              fontSize: 8,
               color: C.dim,
-              letterSpacing: "2px",
+              letterSpacing: "3px",
             }}
           >
             SCROLL
@@ -179,8 +232,8 @@ export function Hero({ emailRef }) {
           <div
             style={{
               width: 1,
-              height: 40,
-              background: `linear-gradient(to bottom, ${C.border}, transparent)`,
+              height: 32,
+              background: "linear-gradient(to bottom, #6878A0, transparent)",
             }}
           />
         </div>

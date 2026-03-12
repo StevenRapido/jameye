@@ -6,12 +6,12 @@ export function Footer() {
       className="footer-grid"
       style={{
         background: C.surface,
-        borderTop: `1px solid ${C.border}`,
+        borderTop: "1px solid #242C40",
         padding: "28px 40px",
-        display: "grid",
-        gridTemplateColumns: "1fr auto 1fr",
+        display: "flex",
+        flexDirection: "row",
         alignItems: "center",
-        gap: 24,
+        justifyContent: "space-between",
       }}
     >
       <span

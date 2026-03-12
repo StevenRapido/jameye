@@ -10,8 +10,7 @@ const METRICS = [
 
 export function SectionEdge() {
   const [ref, visible] = useReveal(0.15);
-  const score = useCount(412, visible, 1600);
-
+  const score = useCount(412, visible, 1800);
   return (
     <section
       ref={ref}
@@ -23,8 +22,38 @@ export function SectionEdge() {
         alignItems: "center",
         justifyContent: "center",
         padding: "120px 40px 80px",
+        overflow: "hidden",
       }}
     >
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        playsInline
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          filter: "brightness(0.22) saturate(0.5)",
+          zIndex: 0,
+          transform: "translateZ(0)",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+        }}
+      >
+        <source src="/section-edge-precision.mp4" type="video/mp4" />
+      </video>
+      {/* Gradient overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, #0A0C1266 0%, #0A0C12 90%)",
+          zIndex: 0,
+        }}
+      />
       {/* Background accent */}
       <div
         style={{
@@ -33,13 +62,16 @@ export function SectionEdge() {
           right: 0,
           width: "60%",
           height: "100%",
-          background: `radial-gradient(ellipse at right center, ${C.violet}14 0%, transparent 70%)`,
+          background: "radial-gradient(circle, #7B9FE808 0%, transparent 70%)",
+          backgroundPosition: "right",
           pointerEvents: "none",
         }}
       />
       <div
         className="section-edge-grid"
         style={{
+          position: "relative",
+          zIndex: 1,
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: 80,
@@ -54,8 +86,9 @@ export function SectionEdge() {
             className={`reveal ${visible ? "visible" : ""} reveal-delay-1`}
             style={{
               fontFamily: mono,
-              fontSize: "12px",
-              color: C.violet,
+              fontSize: 10,
+              color: C.accent,
+              letterSpacing: "4px",
               marginBottom: "1rem",
             }}
           >
@@ -73,13 +106,13 @@ export function SectionEdge() {
           >
             Your edge score /
             <br />
-            <span style={{ color: C.violet }}>is your rank.</span>
+            <span style={{ color: C.accent }}>is your rank.</span>
           </h2>
           <p
             className={`reveal ${visible ? "visible" : ""} reveal-delay-3`}
             style={{
               fontFamily: plex,
-              fontSize: "15px",
+              fontSize: 15,
               color: C.sage,
               lineHeight: 1.7,
               marginBottom: "2rem",
@@ -96,10 +129,10 @@ export function SectionEdge() {
                 style={{ display: "flex", flexDirection: "column", gap: 4 }}
               >
                 <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-                  <span style={{ fontFamily: mono, fontSize: "14px", color: C.violet }}>{m.pct}</span>
-                  <span style={{ fontFamily: plex, fontWeight: 500, fontSize: "14px", color: C.bone }}>{m.label}</span>
+                  <span style={{ fontFamily: mono, fontSize: 14, color: C.accent }}>{m.pct}</span>
+                  <span style={{ fontFamily: plex, fontWeight: 600, fontSize: 12, color: C.bone }}>{m.label}</span>
                 </div>
-                <span style={{ fontFamily: plex, fontSize: "13px", color: C.dim, marginLeft: 48 }}>{m.desc}</span>
+                <span style={{ fontFamily: plex, fontSize: 11, color: C.dim, marginLeft: 48 }}>{m.desc}</span>
               </div>
             ))}
           </div>
@@ -108,17 +141,19 @@ export function SectionEdge() {
         <div
           className={`reveal ${visible ? "visible" : ""} reveal-delay-2`}
           style={{
+            position: "relative",
             background: C.raised,
             border: `1px solid ${C.border}`,
             borderRadius: 16,
             padding: 36,
+            boxShadow: "0 0 60px #7B9FE810",
           }}
         >
           <p
             style={{
               fontFamily: mono,
-              fontSize: "9px",
-              color: C.violet,
+              fontSize: 9,
+              color: C.accent,
               letterSpacing: "3px",
               marginBottom: "0.5rem",
             }}
@@ -145,22 +180,23 @@ export function SectionEdge() {
               marginBottom: "1rem",
             }}
           >
-            / 1000 · Previously closed positions
+            / 1000
           </p>
           <div
             style={{
-              height: 4,
+              height: 3,
               background: C.surface,
               borderRadius: 2,
               overflow: "hidden",
               marginBottom: "1.5rem",
+              transition: "width 1.8s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
             <div
               style={{
                 height: "100%",
-                width: `${(score / 1000) * 100}%`,
-                background: C.violet,
+                width: visible ? `${(score / 1000) * 100}%` : "0%",
+                background: C.accent,
                 borderRadius: 2,
                 transition: "width 1.8s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
@@ -174,30 +210,37 @@ export function SectionEdge() {
               marginBottom: "1rem",
             }}
           >
-            <div style={{ fontFamily: mono, fontSize: 11, color: C.dim }}>
-              Ɛ 14,200
-              <br />
-              <span style={{ color: C.bone }}>Balance</span>
-            </div>
-            <div style={{ fontFamily: mono, fontSize: 11, color: C.green }}>
-              +18 pts
-              <br />
-              <span style={{ color: C.bone }}>Today</span>
-            </div>
-            <div style={{ fontFamily: mono, fontSize: 11, color: C.amber }}>
-              ×0.94
-              <br />
-              <span style={{ color: C.bone }}>Decay</span>
-            </div>
+            {[
+              { val: "Ɛ 14,200", label: "Balance", color: C.bone },
+              { val: "+18 pts", label: "Today", color: C.green },
+              { val: "×0.94", label: "Decay", color: C.amber },
+            ].map(({ val, label, color }) => (
+              <div
+                key={label}
+                style={{
+                  background: C.surface,
+                  border: `1px solid ${C.border}`,
+                  borderRadius: 8,
+                  padding: "10px 12px",
+                  fontFamily: mono,
+                  fontSize: 12,
+                  color,
+                }}
+              >
+                {val}
+                <br />
+                <span style={{ fontSize: 11, color: C.dim }}>{label}</span>
+              </div>
+            ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontFamily: plex, fontSize: 11, color: C.dim }}>Level</span>
+            <span style={{ fontFamily: plex, fontSize: 12, color: C.sage }}>Level</span>
             <span
               style={{
                 fontFamily: bebas,
-                fontSize: 18,
+                fontSize: 20,
                 color: "#FF9960",
-                textShadow: "0 0 12px #FF996066",
+                textShadow: "0 0 12px #FF996055",
               }}
             >
               SKILLED

@@ -1,15 +1,21 @@
+// Warm Navy — definitive design tokens
 export const C = {
-  base:    "#141A14",
-  surface: "#1E261E",
-  raised:  "#242E24",
-  border:  "#4A6048",
-  bone:    "#F5F2EB",
-  sage:    "#D4E4D4",
-  dim:     "#A0BCA0",
-  violet:  "#5B4FE8",
+  base:    "#0A0C12",
+  surface: "#101420",
+  raised:  "#181E2E",
+  border:  "#242C40",
+  bone:    "#FFFFFF",
+  sage:    "#B8C2D8",
+  dim:     "#6878A0",
+  accent:  "#7B9FE8",
   green:   "#4ADE80",
   red:     "#F87171",
   amber:   "#FBBF24",
+};
+
+export const BTN = {
+  primaryBg:   "#FFFFFF",
+  primaryText: "#0A0C12",
 };
 
 export const plex  = "'IBM Plex Sans', sans-serif";
@@ -26,7 +32,7 @@ export const LEVELS = [
   { name: "Advanced",  bg: "#301830", text: "#E888E8", glow: true  },
   { name: "Expert",    bg: "#201838", text: "#AA99FF", glow: true  },
   { name: "Master",    bg: "#181828", text: "#DDD0FF", glow: true  },
-  { name: "Legend",    bg: "#5B4FE8", text: "#FFFFFF",  glow: true  },
+  { name: "Legend",    bg: "#7B9FE8", text: "#0A0C12", glow: true  },
 ];
 
 export const TOURNAMENTS = [

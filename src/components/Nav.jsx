@@ -17,21 +17,22 @@ export function Nav() {
         top: 0,
         left: 0,
         right: 0,
+        height: 52,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "20px 40px",
-        background: scrolled ? "#1E261EEE" : "transparent",
+        padding: "0 40px",
+        background: scrolled ? "#101420EE" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? `1px solid ${C.border}` : "none",
+        borderBottom: scrolled ? "1px solid #242C40" : "none",
         transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
       <span
         style={{
           fontFamily: bebas,
-          fontSize: "22px",
+          fontSize: 22,
           letterSpacing: "5px",
           color: C.bone,
         }}
@@ -42,7 +43,7 @@ export function Nav() {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "8px",
+          gap: 8,
         }}
       >
         <span
@@ -51,17 +52,18 @@ export function Nav() {
             height: 6,
             borderRadius: "50%",
             background: C.green,
-            boxShadow: `0 0 8px ${C.green}`,
+            boxShadow: "0 0 8px #4ADE8099",
           }}
         />
         <span
           style={{
             fontFamily: mono,
-            fontSize: "10px",
+            fontSize: 10,
             color: C.dim,
+            letterSpacing: "2px",
           }}
         >
-          Coming Soon
+          COMING SOON
         </span>
       </div>
     </nav>

@@ -1,10 +1,29 @@
-import { useState, useRef } from "react";
-import { C, bebas, mono, plex } from "../constants";
+import { useState, useRef, useEffect } from "react";
+import { C, BTN, bebas, mono, plex } from "../constants";
 
 export function SectionEmail({ emailRef }) {
   const [state, setState] = useState("idle");
   const [error, setError] = useState("");
+  const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);
+  const formWrapperRef = useRef(null);
+
+  useEffect(() => {
+    const wrapper = formWrapperRef.current;
+    if (!wrapper || state === "done") return;
+    const handleFocusIn = () => setFocused(true);
+    const handleFocusOut = () => {
+      requestAnimationFrame(() => {
+        setFocused(wrapper.contains(document.activeElement));
+      });
+    };
+    wrapper.addEventListener("focusin", handleFocusIn);
+    wrapper.addEventListener("focusout", handleFocusOut);
+    return () => {
+      wrapper.removeEventListener("focusin", handleFocusIn);
+      wrapper.removeEventListener("focusout", handleFocusOut);
+    };
+  }, [state]);
 
   const validate = (email) => {
     const atIdx = email.indexOf("@");
@@ -18,6 +37,7 @@ export function SectionEmail({ emailRef }) {
 
     if (!validate(email)) {
       setError("Enter a valid email address.");
+      setState("idle");
       return;
     }
 
@@ -62,11 +82,12 @@ export function SectionEmail({ emailRef }) {
           transform: "translate(-50%, -50%)",
           fontFamily: bebas,
           fontSize: "22vw",
-          color: C.violet,
+          color: C.accent,
           opacity: 0.03,
           textAlign: "center",
           lineHeight: 1.1,
           whiteSpace: "pre",
+          pointerEvents: "none",
           zIndex: 0,
         }}
       >
@@ -83,8 +104,9 @@ export function SectionEmail({ emailRef }) {
         <p
           style={{
             fontFamily: mono,
-            fontSize: "12px",
-            color: C.violet,
+            fontSize: 10,
+            color: C.accent,
+            letterSpacing: "4px",
             marginBottom: "1rem",
           }}
         >
@@ -101,12 +123,12 @@ export function SectionEmail({ emailRef }) {
         >
           Get early /
           <br />
-          <span style={{ color: C.violet }}>access.</span>
+          <span style={{ color: C.accent }}>access.</span>
         </h2>
         <p
           style={{
             fontFamily: plex,
-            fontSize: "15px",
+            fontSize: 15,
             color: C.sage,
             lineHeight: 1.7,
             marginBottom: "2rem",
@@ -118,36 +140,39 @@ export function SectionEmail({ emailRef }) {
         {state === "done" ? (
           <div
             style={{
-              padding: 28,
-              border: `1px solid ${C.green}`,
+              background: C.raised,
+              border: "1px solid #4ADE8066",
+              boxShadow: "0 0 32px #4ADE8018",
               borderRadius: 8,
-              background: C.surface,
+              padding: "20px 28px",
               textAlign: "center",
             }}
           >
             <p
               style={{
                 fontFamily: mono,
-                fontSize: 16,
+                fontSize: 13,
                 color: C.green,
                 marginBottom: "0.5rem",
               }}
             >
               ✓ You're on the list.
             </p>
-            <p style={{ fontFamily: plex, fontSize: 13, color: C.dim }}>
-              We'll be in touch when we launch.
+            <p style={{ fontFamily: plex, fontSize: 12, color: C.dim }}>
+              We'll be in touch before launch. Luck runs out — get ready.
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
             <div
+              ref={formWrapperRef}
               style={{
                 display: "flex",
-                background: C.surface,
-                border: `1px solid ${error ? "#F8717188" : C.border}`,
+                background: C.raised,
+                border: `1px solid ${error ? "#F8717188" : focused ? C.accent : C.border}`,
                 borderRadius: 8,
                 overflow: "hidden",
+                transition: "border-color 0.2s",
               }}
             >
               <input
@@ -168,19 +193,24 @@ export function SectionEmail({ emailRef }) {
               />
               <button
                 type="submit"
-                className="btn-notify"
                 disabled={state === "loading"}
                 style={{
                   fontFamily: plex,
                   fontWeight: 700,
                   fontSize: 13,
-                  background: state === "loading" ? C.raised : C.violet,
-                  color: "#FFFFFF",
+                  background: state === "loading" ? C.raised : BTN.primaryBg,
+                  color: state === "loading" ? C.dim : BTN.primaryText,
                   border: "none",
                   borderLeft: `1px solid ${C.border}`,
                   padding: "16px 28px",
                   cursor: state === "loading" ? "not-allowed" : "pointer",
-                  transition: "background 0.2s",
+                  transition: "opacity 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  if (state !== "loading") e.currentTarget.style.opacity = "0.88";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = "1";
                 }}
               >
                 {state === "loading" ? "···" : "Notify Me"}
@@ -189,8 +219,8 @@ export function SectionEmail({ emailRef }) {
             {error && (
               <p
                 style={{
-                  fontFamily: plex,
-                  fontSize: 12,
+                  fontFamily: mono,
+                  fontSize: 10,
                   color: C.red,
                   marginTop: 8,
                   textAlign: "left",
@@ -205,7 +235,7 @@ export function SectionEmail({ emailRef }) {
                 fontSize: 9,
                 color: C.dim,
                 letterSpacing: "1px",
-                marginTop: 12,
+                marginTop: 14,
               }}
             >
               No spam. One email when we launch.
