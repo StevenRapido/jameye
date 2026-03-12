@@ -37,7 +37,7 @@ export function SectionTournaments() {
           backfaceVisibility: "hidden",
         }}
       >
-        <source src="/smooth/section3-bg.mp4" type="video/mp4" />
+        <source src="/section3-bg.mp4" type="video/mp4" />
       </video>
       {/* Gradient overlay */}
       <div

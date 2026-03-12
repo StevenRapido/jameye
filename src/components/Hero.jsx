@@ -58,7 +58,7 @@ export function Hero({ emailRef }) {
           backfaceVisibility: "hidden",
         }}
       >
-        <source src="/smooth/hero-bg.mp4" type="video/mp4" />
+        <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
       {/* Gradient overlay */}
       <div
